@@ -2,6 +2,7 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import { getPosts, getProjects, getReadingTime, formatDate } from "../lib/content";
 import { Image } from "astro:assets";
+import headerPhoto from "../assets/header-photo.jpg";
 
 const posts = (await getPosts()).slice(0, 5);
 const projects = (await getProjects()).slice(0, 3);
@@ -10,7 +11,12 @@ const projects = (await getProjects()).slice(0, 3);
 <BaseLayout
 	title="Ken Miko"
 	description="Data analytics, accounting systems, and making financial and technical systems legible — portfolio and blog by Ken Miko."
+	photoCredit={{ name: "Polina Zimmerman", url: "https://www.pexels.com/photo/photo-of-computers-near-windows-3747481/" }}
 >
+	<div class="hero-banner" slot="banner">
+		<Image src={headerPhoto} alt="" width={1920} loading="eager" fetchpriority="high" />
+	</div>
+
 	<section>
 		<h1>Ken Miko</h1>
 		<p>
