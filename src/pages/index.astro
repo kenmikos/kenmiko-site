@@ -15,18 +15,18 @@ const projects = (await getProjects()).slice(0, 3);
 >
 	<div class="hero-banner" slot="banner">
 		<Image src={headerPhoto} alt="" width={1920} loading="eager" fetchpriority="high" />
+		<div class="hero-banner-scrim"></div>
+		<div class="hero-banner-content">
+			<h1>Ken Miko</h1>
+			<p>
+				I'm finishing a BS in Accounting Information Systems with a data analytics concentration,
+				and working as a project controls data analyst. This site collects portfolio projects and
+				writing about making financial and technical systems legible to the people they're supposed
+				to serve — analytics, budgeting, Louisiana-specific legal and financial quirks, business
+				teardowns, and going back to school as a working adult.
+			</p>
+		</div>
 	</div>
-
-	<section>
-		<h1>Ken Miko</h1>
-		<p>
-			I'm finishing a BS in Accounting Information Systems with a data analytics concentration,
-			and working as a project controls data analyst. This site collects portfolio projects and
-			writing about making financial and technical systems legible to the people they're supposed
-			to serve — analytics, budgeting, Louisiana-specific legal and financial quirks, business
-			teardowns, and going back to school as a working adult.
-		</p>
-	</section>
 
 	<section>
 		<div class="section-heading">

@@ -216,21 +216,56 @@ article,
 }
 
 .hero-banner {
+	position: relative;
 	width: 100%;
-	height: 320px;
 	overflow: hidden;
 }
 
 .hero-banner img {
+	position: absolute;
+	inset: 0;
 	width: 100%;
 	height: 100%;
 	object-fit: cover;
-	object-position: center bottom;
+	object-position: center center;
+	z-index: 0;
+}
+
+/* Dark scrim so white text stays readable regardless of the photo underneath. */
+.hero-banner-scrim {
+	position: absolute;
+	inset: 0;
+	background: rgba(0, 0, 0, 0.55);
+	z-index: 1;
+}
+
+/* Text over the photo always uses fixed white/light values, independent of the
+   light/dark toggle, since it has to stay readable against a photo either way. */
+.hero-banner-content {
+	position: relative;
+	z-index: 2;
+	max-width: var(--container-width);
+	margin: 0 auto;
+	padding: var(--space-24) var(--space-4);
+	text-align: center;
+}
+
+.hero-banner-content h1 {
+	color: #ffffff;
+	margin-top: 0;
+	text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+}
+
+.hero-banner-content p {
+	color: rgba(255, 255, 255, 0.92);
+	max-width: 42rem;
+	margin: 0 auto;
+	text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
 }
 
 @media (max-width: 40rem) {
-	.hero-banner {
-		height: 180px;
+	.hero-banner-content {
+		padding: var(--space-16) var(--space-4);
 	}
 }
 
