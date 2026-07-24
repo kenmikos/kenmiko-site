@@ -159,6 +159,9 @@ git push
 **"I set `draft: false` and pushed, but my post/project isn't showing up on the live site."**
 Give it a couple of minutes — Cloudflare needs to build and deploy after the push. If it's been longer than ~10 minutes, check the build log in the Cloudflare dashboard (Workers & Pages → kenmiko-site → the latest deployment) for an error. Also double check you actually saved `draft: false` (not `draft: true`) and that you pushed to `main`, not another branch.
 
+**The build fails with a YAML error like `bad indentation of a mapping entry`.**
+A frontmatter value has a colon followed by a space in it (e.g. `summary: The problem: it's slow`) without quotes around the whole value. YAML reads `: ` as "start of a new field," not as punctuation in your sentence. Fix: wrap the value in double quotes — `summary: "The problem: it's slow"`. The templates already quote every field that's likely to contain prose (`title`, `description`, `summary`, `scope`, `coverAlt`) for this reason — if you're editing one of those, keep the quotes.
+
 **The build fails with `InvalidContentEntryDataError` or a message about a collection schema.**
 This means a required field is missing, or a value is the wrong type — usually a broken `date` (e.g. `date: not-a-real-date` instead of `date: 2026-01-01`), a missing `title`/`description`, or a `cover` path that doesn't point to a real file in a project's folder. The error names the collection (`posts` or `projects`), the file, and the field — open that file and fix the value. (Adding an extra field that *isn't* in the schema is harmless and gets silently ignored, so this only happens when something required is missing or malformed.)
 

@@ -12,6 +12,14 @@ scope: "" # optional — one-line scope summary, e.g. "single-day turnaround, tw
 deliverables: [] # optional — concrete outputs, e.g. ["Excel data pipeline", "Power BI dashboard", "SOP quick-reference"]
 ---
 
+<!--
+  IMPORTANT: title, description, scope, and coverAlt above must stay wrapped in double quotes.
+  If any of them contain a colon followed by a space (e.g. "The result: fewer errors"), the
+  quotes are what stop that colon from being misread as a new frontmatter field — without them
+  the build fails with a YAML parsing error ("bad indentation of a mapping entry"), not a
+  friendly one. When in doubt, keep the quotes.
+-->
+
 ## Project Overview
 
 Write the problem, what you built, what you used, and the outcome. Use `##`/`###` headings —
