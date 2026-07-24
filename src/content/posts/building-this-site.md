@@ -17,21 +17,21 @@ I had three requirements:
 - **I want it to be fast.** Slow sites lose readers and rank worse, and there's no reason a page that's mostly text should be slow.
 - **I want it to be low-effort to update.** I'm doing this around a full-time job and a full course load. If posting means fighting a clunky admin panel, I won't post.
 
-The first and last ones killed most of the obvious options. The easy platforms are easy to start and annoying to live with. So I went the other direction.
+The first and last ones killed most of the obvious options. The easy platforms are easy to start and annoying to live with. Well... what about just doing it myself?
 
 ## The stack
 
 The site is built with [Astro](https://astro.build) and hosted on Cloudflare Pages. In plain terms: Astro turns a folder of files into a fast website, and Cloudflare serves it for free. Neat!
 
-The part that sold me is how updating works. There's no dashboard. A blog post is just a text file in a folder. I write it, I push it, and about a minute later it's live. Editing is opening the file and changing it. That's the whole system, and the fact that it's *that* simple is what makes me believe I'll actually keep it up.
+I did use Claude Code to speed up the initial site setup, but running the site from there is pretty simple. There's no dashboard. A blog post is just a text file in a folder on my computer. I write it, I push it, and about a minute later it's live. Editing is opening the file and changing it. That's the whole system, and the fact that it's *that* simple is what makes me believe I'll actually keep it up.
 
 Fast falls out of this for free. Because the pages are built ahead of time instead of assembled in your browser, there's almost nothing for your device to do when you visit. It just loads.
 
-## The part where my own color betrayed me
+## The part where my own design slightly betrayed me
 
 Here's the bit I didn't expect to be writing about.
 
-Fun fact, I was a Visual Communications major (before the pandemic changed all my plans 😑), so I already have and interest in design with some classes under my belt. So, I already had a look for this site — a dark palette with a muted teal I liked, color picked from [this picture I found](https://www.pexels.com/photo/photo-of-computers-near-windows-3747481/). When I sat down to formalize it, I ran the colors through a contrast check, which measures whether text is actually readable against its background. There's a standard for this (WCAG), and it exists because "looks fine to me" and "readable for everyone" are not the same thing.
+Fun fact, I was a Visual Communications major (before the pandemic changed all my plans 😑), so I already have an interest in design with some classes under my belt. I had a look for this site in mind: a dark palette with a muted teal I liked, color picked from [this picture I found](https://www.pexels.com/photo/photo-of-computers-near-windows-3747481/). When I sat down to formalize it, I ran the colors through a [contrast checker](https://accessibleweb.com/color-contrast-checker/), which measures whether text is actually readable against its background. There's a standard for this (WCAG), and it exists because "looks fine to me" and "readable for everyone" are not the same thing.
 
 My teal on black scored 1.95 to 1. The minimum for body text is 4.5 to 1. It failed :(. I mean, I didn't plan on using the teal as a body text color, just an accent color, but even as an accent it should have good contrast.
 
