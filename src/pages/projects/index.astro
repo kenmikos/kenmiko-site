@@ -1,0 +1,33 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { getProjects } from "../../lib/content";
+import { Image } from "astro:assets";
+
+const projects = await getProjects();
+---
+
+<BaseLayout title="Projects" description="Data analytics portfolio projects by Ken Miko.">
+	<h1>Projects</h1>
+	<ul class="card-list">
+		{
+			projects.map((project) => (
+				<li>
+					<a href={`/projects/${project.id}/`}>
+						<Image class="card-cover" src={project.data.cover} alt={project.data.coverAlt} width={640} />
+					</a>
+					<h2 class="card-title">
+						<a href={`/projects/${project.id}/`}>{project.data.title}</a>
+					</h2>
+					<p>{project.data.description}</p>
+					{project.data.tools.length > 0 && (
+						<ul class="tag-list" aria-label="Tools used">
+							{project.data.tools.map((tool) => (
+								<li class="tag">{tool}</li>
+							))}
+						</ul>
+					)}
+				</li>
+			))
+		}
+	</ul>
+</BaseLayout>

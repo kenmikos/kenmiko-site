@@ -1,0 +1,473 @@
+/* ==========================================================================
+   1. Design tokens
+   Palette, spacing, and type scale. Change values here to restyle the site.
+   Source: design system spec (Atkinson Hyperlegible + WCAG-audited teal/black/gray/white).
+   ========================================================================== */
+
+:root {
+	/* raw palette */
+	--c-teal: #38505a;
+	--c-teal-light: #628c9d;
+	--c-black: #1e1e1f;
+	--c-gray: #acacb3;
+	--c-white: #f9f9f9;
+
+	/* semantic — light (default, used for reading pages) */
+	--bg: var(--c-white);
+	--bg-elevated: #ffffff;
+	--text: var(--c-black);
+	--text-muted: #5a5a60; /* raw gray fails contrast on white, darkened */
+	--heading: var(--c-black);
+	--accent: var(--c-teal);
+	--accent-text: var(--c-white);
+	--surface-accent: var(--c-teal);
+	--border: #dcdce0;
+	--code-bg: #f0f0f2;
+
+	/* fonts */
+	--font-heading: "Atkinson Hyperlegible Mono", ui-monospace, monospace;
+	--font-subheading: "Atkinson Hyperlegible Next", system-ui, sans-serif;
+	--font-body: "Atkinson Hyperlegible Next", system-ui, sans-serif;
+	--font-accent: "Atkinson Hyperlegible Mono", ui-monospace, monospace;
+	--font-code: "Atkinson Hyperlegible Mono", ui-monospace, monospace;
+
+	/* type scale (1.25 ratio, fluid) */
+	--text-xs: clamp(0.75rem, 0.73rem + 0.1vw, 0.8rem);
+	--text-sm: clamp(0.875rem, 0.85rem + 0.12vw, 0.95rem);
+	--text-base: clamp(1rem, 0.97rem + 0.15vw, 1.125rem);
+	--text-lg: clamp(1.25rem, 1.2rem + 0.25vw, 1.4rem);
+	--text-xl: clamp(1.563rem, 1.5rem + 0.3vw, 1.75rem);
+	--text-2xl: clamp(1.953rem, 1.85rem + 0.5vw, 2.25rem);
+	--text-3xl: clamp(2.441rem, 2.25rem + 0.9vw, 3rem);
+
+	/* spacing (8px rhythm) */
+	--space-1: 0.25rem;
+	--space-2: 0.5rem;
+	--space-3: 0.75rem;
+	--space-4: 1rem;
+	--space-6: 1.5rem;
+	--space-8: 2rem;
+	--space-12: 3rem;
+	--space-16: 4rem;
+	--space-24: 6rem;
+
+	--radius-sm: 4px;
+	--radius-md: 8px;
+
+	--measure: 68ch;
+	--container-width: 1200px;
+}
+
+[data-theme="dark"] {
+	--bg: var(--c-black);
+	--bg-elevated: #292a2b;
+	--text: var(--c-white);
+	--text-muted: var(--c-gray);
+	--heading: var(--c-white);
+	--accent: var(--c-teal-light); /* inline link text only */
+	--accent-text: var(--c-white); /* text ON teal fills */
+	--surface-accent: var(--c-teal); /* button + card fills stay the original teal */
+	--border: #3a3a3d;
+	--code-bg: #262728;
+}
+
+/* ==========================================================================
+   2. Reset
+   ========================================================================== */
+
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+}
+
+body {
+	margin: 0;
+}
+
+img,
+picture,
+svg {
+	max-width: 100%;
+	display: block;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	*,
+	*::before,
+	*::after {
+		animation-duration: 0.01ms !important;
+		animation-iteration-count: 1 !important;
+		transition-duration: 0.01ms !important;
+		scroll-behavior: auto !important;
+	}
+}
+
+/* ==========================================================================
+   3. Base typography
+   ========================================================================== */
+
+html {
+	color-scheme: light dark;
+}
+
+body {
+	font-family: var(--font-body);
+	font-size: var(--text-base);
+	color: var(--text);
+	background: var(--bg);
+	line-height: 1.65;
+}
+
+h1,
+h2,
+h3 {
+	font-family: var(--font-heading);
+	font-weight: 700;
+	line-height: 1.15;
+	color: var(--heading);
+	margin: var(--space-8) 0 var(--space-4);
+}
+
+h4,
+h5,
+h6 {
+	font-family: var(--font-subheading);
+	font-weight: 700;
+	line-height: 1.15;
+	color: var(--heading);
+	margin: var(--space-6) 0 var(--space-3);
+}
+
+h1 {
+	font-size: var(--text-3xl);
+	margin-top: 0;
+}
+
+h2 {
+	font-size: var(--text-2xl);
+}
+
+h3 {
+	font-size: var(--text-xl);
+}
+
+h4 {
+	font-size: var(--text-lg);
+}
+
+p,
+ul,
+ol {
+	margin: 0 0 var(--space-4);
+}
+
+a {
+	color: var(--accent);
+	text-underline-offset: 0.2em;
+}
+
+a:hover {
+	text-decoration-thickness: 2px;
+}
+
+code {
+	font-family: var(--font-code);
+	background: var(--code-bg);
+	padding: 0.15em 0.4em;
+	border-radius: var(--radius-sm);
+	font-size: 0.9em;
+}
+
+pre {
+	background: var(--code-bg);
+	padding: var(--space-4);
+	border-radius: var(--radius-md);
+	overflow-x: auto;
+}
+
+pre code {
+	background: none;
+	padding: 0;
+}
+
+blockquote {
+	border-left: 3px solid var(--border);
+	margin: var(--space-4) 0;
+	padding-left: var(--space-4);
+	color: var(--text-muted);
+}
+
+/* ==========================================================================
+   4. Layout
+   ========================================================================== */
+
+.container {
+	max-width: var(--container-width);
+	margin: 0 auto;
+	padding: 0 var(--space-4);
+}
+
+article,
+.prose {
+	max-width: var(--measure);
+}
+
+.site-header {
+	border-bottom: 1px solid var(--border);
+	padding: var(--space-4) 0;
+	margin-bottom: var(--space-16);
+}
+
+.site-header .container {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	flex-wrap: wrap;
+	gap: var(--space-2);
+}
+
+.site-header nav {
+	display: flex;
+	align-items: center;
+	gap: var(--space-6);
+	font-family: var(--font-accent);
+	font-weight: 300;
+	font-size: var(--text-sm);
+	text-transform: uppercase;
+	letter-spacing: 0.08em;
+}
+
+.site-header a {
+	text-decoration: none;
+	color: var(--text);
+}
+
+.site-header a:hover {
+	color: var(--accent);
+}
+
+.brand {
+	font-family: var(--font-heading);
+	font-weight: 700;
+	font-size: var(--text-lg);
+	text-decoration: none;
+	color: var(--heading);
+}
+
+.site-footer {
+	border-top: 1px solid var(--border);
+	margin-top: var(--space-24);
+	padding: var(--space-6) 0 var(--space-8);
+	color: var(--text-muted);
+	font-family: var(--font-accent);
+	font-weight: 300;
+	font-size: var(--text-sm);
+}
+
+main {
+	padding-bottom: var(--space-24);
+}
+
+@media (max-width: 40rem) {
+	.site-header {
+		margin-bottom: var(--space-16);
+	}
+
+	main {
+		padding-bottom: var(--space-16);
+	}
+}
+
+/* ==========================================================================
+   5. Components
+   ========================================================================== */
+
+/* theme toggle */
+
+.theme-toggle {
+	font-family: var(--font-accent);
+	background: none;
+	border: 1px solid var(--border);
+	color: var(--text);
+	border-radius: var(--radius-sm);
+	min-width: 44px;
+	min-height: 44px;
+	padding: var(--space-1) var(--space-2);
+	cursor: pointer;
+}
+
+.theme-toggle:hover {
+	border-color: var(--accent);
+	color: var(--accent);
+}
+
+/* buttons */
+
+.button {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	min-height: 44px;
+	padding: var(--space-2) var(--space-6);
+	background: var(--surface-accent);
+	color: var(--accent-text);
+	font-family: var(--font-accent);
+	font-weight: 400;
+	border: none;
+	border-radius: var(--radius-sm);
+	text-decoration: none;
+	cursor: pointer;
+}
+
+.button:hover {
+	filter: brightness(1.1);
+}
+
+/* tags / skills strip / metadata */
+
+.tag-list {
+	display: flex;
+	flex-wrap: wrap;
+	gap: var(--space-3);
+	list-style: none;
+	padding: 0;
+	margin: var(--space-4) 0;
+}
+
+.tag,
+.card-meta {
+	font-family: var(--font-accent);
+	font-weight: 300;
+	font-size: var(--text-sm);
+	color: var(--text-muted);
+}
+
+a.tag {
+	text-decoration: none;
+}
+
+li.tag,
+a.tag {
+	text-transform: uppercase;
+	letter-spacing: 0.08em;
+}
+
+a.tag:hover {
+	color: var(--accent);
+}
+
+.card-meta {
+	margin: 0 0 var(--space-1);
+}
+
+/* cards */
+
+.card-list {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-8);
+}
+
+.card-list > li {
+	background: var(--bg-elevated);
+	border: 1px solid var(--border);
+	border-radius: var(--radius-md);
+	padding: var(--space-4);
+	transition: border-color 0.15s ease;
+}
+
+.card-list > li:hover {
+	border-color: var(--accent);
+}
+
+.card-title {
+	font-family: var(--font-subheading);
+	margin: 0 0 var(--space-1);
+	font-size: var(--text-lg);
+}
+
+.card-title a {
+	text-decoration: none;
+	color: var(--heading);
+}
+
+.card-cover {
+	border-radius: var(--radius-md);
+	margin-bottom: var(--space-2);
+}
+
+.section-heading {
+	display: flex;
+	justify-content: space-between;
+	align-items: baseline;
+	gap: var(--space-4);
+}
+
+/* tables */
+
+table {
+	width: 100%;
+	border-collapse: collapse;
+	margin: var(--space-6) 0;
+	font-size: var(--text-sm);
+}
+
+caption {
+	caption-side: bottom;
+	color: var(--text-muted);
+	font-size: var(--text-xs);
+	padding-top: var(--space-2);
+	text-align: left;
+}
+
+th,
+td {
+	border-bottom: 1px solid var(--border);
+	padding: var(--space-3);
+	text-align: left;
+}
+
+th {
+	font-family: var(--font-accent);
+	font-weight: 300;
+	text-transform: uppercase;
+	letter-spacing: 0.08em;
+	color: var(--text-muted);
+}
+
+tbody tr:nth-child(even) {
+	background: var(--bg-elevated);
+}
+
+/* ==========================================================================
+   6. Accessibility
+   ========================================================================== */
+
+:focus-visible {
+	outline: 2px solid var(--accent);
+	outline-offset: 2px;
+}
+
+/* standalone tap targets (nav links, buttons) get the full 44px minimum;
+   inline prose links stay text-sized since they aren't isolated targets */
+.site-header nav a,
+.button,
+.theme-toggle {
+	min-height: 44px;
+	display: inline-flex;
+	align-items: center;
+}
+
+/* ==========================================================================
+   7. Responsive
+   ========================================================================== */
+
+@media (max-width: 30rem) {
+	body {
+		font-size: var(--text-base);
+	}
+}

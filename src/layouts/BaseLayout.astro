@@ -1,0 +1,102 @@
+---
+import "@fontsource/atkinson-hyperlegible-next/400.css";
+import "@fontsource/atkinson-hyperlegible-next/700.css";
+import "@fontsource/atkinson-hyperlegible-mono/300.css";
+import "@fontsource/atkinson-hyperlegible-mono/400.css";
+import "@fontsource/atkinson-hyperlegible-mono/700.css";
+import "../styles/global.css";
+
+interface Props {
+	title: string;
+	description: string;
+	image?: string;
+	type?: "website" | "article";
+}
+
+const { title, description, image, type = "website" } = Astro.props;
+
+const siteName = "Ken Miko";
+const pageTitle = title === siteName ? title : `${title} | ${siteName}`;
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+const ogImage = image ? new URL(image, Astro.site) : undefined;
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="color-scheme" content="light dark" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<link rel="canonical" href={canonicalURL} />
+		<meta name="generator" content={Astro.generator} />
+
+		<title>{pageTitle}</title>
+		<meta name="description" content={description} />
+
+		<meta property="og:type" content={type} />
+		<meta property="og:site_name" content={siteName} />
+		<meta property="og:title" content={pageTitle} />
+		<meta property="og:description" content={description} />
+		<meta property="og:url" content={canonicalURL} />
+		{ogImage && <meta property="og:image" content={ogImage} />}
+
+		<meta name="twitter:card" content={ogImage ? "summary_large_image" : "summary"} />
+		<meta name="twitter:title" content={pageTitle} />
+		<meta name="twitter:description" content={description} />
+
+		<link rel="alternate" type="application/rss+xml" title={siteName} href="/rss.xml" />
+
+		<script is:inline>
+			// Blocking, runs before first paint: avoids a flash of the wrong theme.
+			// Source of truth is localStorage once the user has picked a theme;
+			// otherwise falls back to the system preference.
+			(function () {
+				var stored = localStorage.getItem("theme");
+				var theme = stored || (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+				document.documentElement.setAttribute("data-theme", theme);
+			})();
+		</script>
+	</head>
+	<body>
+		<header class="site-header">
+			<div class="container">
+				<a class="brand" href="/">Ken Miko</a>
+				<nav>
+					<a href="/blog/">Blog</a>
+					<a href="/projects/">Projects</a>
+					<a href="/about/">About</a>
+					<button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode" type="button">
+						<span id="theme-toggle-label" aria-hidden="true">···</span>
+					</button>
+				</nav>
+			</div>
+		</header>
+		<main class="container">
+			<slot />
+		</main>
+		<footer class="site-footer">
+			<div class="container">
+				<p>&copy; {new Date().getFullYear()} Ken Miko. Built with Astro.</p>
+			</div>
+		</footer>
+		<script>
+			const toggle = document.getElementById("theme-toggle");
+			const label = document.getElementById("theme-toggle-label");
+
+			function syncLabel() {
+				const isDark = document.documentElement.getAttribute("data-theme") === "dark";
+				if (label) label.textContent = isDark ? "Light" : "Dark";
+			}
+
+			toggle?.addEventListener("click", () => {
+				const next = document.documentElement.getAttribute("data-theme") === "dark" ? "light" : "dark";
+				document.documentElement.setAttribute("data-theme", next);
+				localStorage.setItem("theme", next);
+				syncLabel();
+			});
+
+			syncLabel();
+		</script>
+	</body>
+</html>

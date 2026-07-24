@@ -1,0 +1,39 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { getPosts, getAllTags } from "../../lib/content";
+
+const posts = await getPosts();
+const tags = getAllTags(posts);
+---
+
+<BaseLayout title="Blog" description="Writing on analytics, budgeting, financial systems, and going back to school as a working adult.">
+	<h1>Blog</h1>
+
+	{
+		tags.length > 0 && (
+			<ul class="tag-list" aria-label="Filter by tag">
+				{tags.map((tag) => (
+					<li>
+						<a class="tag" href={`/blog/tags/${tag}/`}>{tag}</a>
+					</li>
+				))}
+			</ul>
+		)
+	}
+
+	<ul class="card-list">
+		{
+			posts.map((post) => (
+				<li>
+					<h2 class="card-title">
+						<a href={`/blog/${post.id}/`}>{post.data.title}</a>
+					</h2>
+					<p class="card-meta">
+						{post.data.date.toLocaleDateString("en-US", { dateStyle: "long" })}
+					</p>
+					<p>{post.data.description}</p>
+				</li>
+			))
+		}
+	</ul>
+</BaseLayout>

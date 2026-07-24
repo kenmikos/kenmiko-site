@@ -1,0 +1,36 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import { getPosts, getAllTags } from "../../../lib/content";
+
+export async function getStaticPaths() {
+	const posts = await getPosts();
+	const tags = getAllTags(posts);
+	return tags.map((tag) => ({
+		params: { tag },
+		props: { posts: posts.filter((post) => post.data.tags.includes(tag)) },
+	}));
+}
+
+const { tag } = Astro.params;
+const { posts } = Astro.props;
+---
+
+<BaseLayout title={`Posts tagged "${tag}"`} description={`Blog posts tagged ${tag}.`}>
+	<h1>Tag: {tag}</h1>
+	<p><a href="/blog/">&larr; All posts</a></p>
+	<ul class="card-list">
+		{
+			posts.map((post) => (
+				<li>
+					<h2 class="card-title">
+						<a href={`/blog/${post.id}/`}>{post.data.title}</a>
+					</h2>
+					<p class="card-meta">
+						{post.data.date.toLocaleDateString("en-US", { dateStyle: "long" })}
+					</p>
+					<p>{post.data.description}</p>
+				</li>
+			))
+		}
+	</ul>
+</BaseLayout>

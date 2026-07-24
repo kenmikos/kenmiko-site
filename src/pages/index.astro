@@ -1,31 +1,73 @@
 ---
-import { getCollection } from "astro:content";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { getPosts, getProjects } from "../lib/content";
+import { Image } from "astro:assets";
 
-const posts = (await getCollection("posts", ({ data }) => !data.draft)).sort(
-  (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
-);
+const posts = (await getPosts()).slice(0, 5);
+const projects = (await getProjects()).slice(0, 3);
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Ken Miko</title>
-	</head>
-	<body>
+<BaseLayout
+	title="Ken Miko"
+	description="Data analytics, accounting systems, and making financial and technical systems legible — portfolio and blog by Ken Miko."
+>
+	<section>
 		<h1>Ken Miko</h1>
-		<h2>Posts</h2>
-		<ul>
+		<p>
+			I'm finishing a BS in Accounting Information Systems with a data analytics concentration,
+			and working as a project controls data analyst. This site collects portfolio projects and
+			writing about making financial and technical systems legible to the people they're supposed
+			to serve — analytics, budgeting, Louisiana-specific legal and financial quirks, business
+			teardowns, and going back to school as a working adult.
+		</p>
+	</section>
+
+	<section>
+		<div class="section-heading">
+			<h2>Recent posts</h2>
+			<a href="/blog/">All posts &rarr;</a>
+		</div>
+		<ul class="card-list">
 			{
 				posts.map((post) => (
 					<li>
-						<a href={`/posts/${post.id}/`}>{post.data.title}</a>
+						<h3 class="card-title">
+							<a href={`/blog/${post.id}/`}>{post.data.title}</a>
+						</h3>
+						<p class="card-meta">
+							{post.data.date.toLocaleDateString("en-US", { dateStyle: "long" })}
+						</p>
+						<p>{post.data.description}</p>
 					</li>
 				))
 			}
 		</ul>
-	</body>
-</html>
+	</section>
+
+	<section>
+		<div class="section-heading">
+			<h2>Featured projects</h2>
+			<a href="/projects/">All projects &rarr;</a>
+		</div>
+		<ul class="card-list">
+			{
+				projects.map((project) => (
+					<li>
+						<a href={`/projects/${project.id}/`}>
+							<Image
+								class="card-cover"
+								src={project.data.cover}
+								alt={project.data.coverAlt}
+								width={640}
+							/>
+						</a>
+						<h3 class="card-title">
+							<a href={`/projects/${project.id}/`}>{project.data.title}</a>
+						</h3>
+						<p>{project.data.description}</p>
+					</li>
+				))
+			}
+		</ul>
+	</section>
+</BaseLayout>
