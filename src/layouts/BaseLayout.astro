@@ -61,7 +61,7 @@ const ogImage = image ? new URL(image, Astro.site) : undefined;
 	<body>
 		<header class="site-header">
 			<div class="container">
-				<a class="brand" href="/">Ken Miko</a>
+				<a class="brand" href="/">{siteName}</a>
 				<nav>
 					<a href="/blog/">Blog</a>
 					<a href="/projects/">Projects</a>
@@ -77,7 +77,7 @@ const ogImage = image ? new URL(image, Astro.site) : undefined;
 		</main>
 		<footer class="site-footer">
 			<div class="container">
-				<p>&copy; {new Date().getFullYear()} Ken Miko. Built with Astro.</p>
+				<p>&copy; {new Date().getFullYear()} {siteName}. Built with Astro.</p>
 			</div>
 		</footer>
 		<script>

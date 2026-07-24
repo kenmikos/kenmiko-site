@@ -1,8 +1,12 @@
 import { defineCollection, z } from "astro:content";
 import { glob } from "astro/loaders";
 
+// "_template" files/folders are excluded from both collections so they can hold
+// example frontmatter (including a fake image path) without breaking the build.
+const templateIgnore = ["!**/_*.{md,mdx}", "!**/_*/**"];
+
 const posts = defineCollection({
-  loader: glob({ pattern: "**/*.{md,mdx}", base: "./src/content/posts" }),
+  loader: glob({ pattern: ["**/*.{md,mdx}", ...templateIgnore], base: "./src/content/posts" }),
   schema: z.object({
     title: z.string(),
     description: z.string(),
@@ -13,7 +17,7 @@ const posts = defineCollection({
 });
 
 const projects = defineCollection({
-  loader: glob({ pattern: "**/*.{md,mdx}", base: "./src/content/projects" }),
+  loader: glob({ pattern: ["**/*.{md,mdx}", ...templateIgnore], base: "./src/content/projects" }),
   schema: ({ image }) =>
     z.object({
       title: z.string(),
