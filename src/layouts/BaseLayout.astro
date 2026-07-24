@@ -57,6 +57,10 @@ const ogImage = image ? new URL(image, Astro.site) : undefined;
 				document.documentElement.setAttribute("data-theme", theme);
 			})();
 		</script>
+
+		<!-- Cloudflare Web Analytics -->
+		<script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "b1e70371cf674249aa7d5dfc8c55d60b"}'></script>
+		<!-- End Cloudflare Web Analytics -->
 	</head>
 	<body>
 		<header class="site-header">
