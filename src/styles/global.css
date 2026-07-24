@@ -416,6 +416,22 @@ summary {
 	font-weight: 700;
 }
 
+/* post summary box — same collapsible mechanism, styled distinctly from a
+   generic collapsed section so it reads as "read this first," not "optional detail" */
+
+.summary-box {
+	background: var(--bg-elevated);
+	border-left: 3px solid var(--accent);
+	border-top: none;
+	border-right: none;
+	border-bottom: none;
+	border-radius: 0 var(--radius-md) var(--radius-md) 0;
+}
+
+.summary-box p:last-child {
+	margin-bottom: 0;
+}
+
 /* cards */
 
 .card-list {

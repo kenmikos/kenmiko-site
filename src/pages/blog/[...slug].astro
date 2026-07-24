@@ -1,6 +1,6 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
-import { getPosts } from "../../lib/content";
+import { getPosts, getReadingTime } from "../../lib/content";
 import { render } from "astro:content";
 
 export async function getStaticPaths() {
@@ -13,12 +13,25 @@ export async function getStaticPaths() {
 
 const { post } = Astro.props;
 const { Content } = await render(post);
+const readingTime = getReadingTime(post.body ?? "");
 ---
 
 <BaseLayout title={post.data.title} description={post.data.description} type="article">
 	<article>
 		<h1>{post.data.title}</h1>
-		<p class="card-meta">{post.data.date.toLocaleDateString("en-US", { dateStyle: "long" })}</p>
+		<p class="card-meta">
+			{post.data.date.toLocaleDateString("en-US", { dateStyle: "long" })} · {readingTime} min read
+		</p>
+
+		{
+			post.data.summary && (
+				<details class="summary-box" open>
+					<summary>Summary</summary>
+					<p>{post.data.summary}</p>
+				</details>
+			)
+		}
+
 		<Content />
 	</article>
 

@@ -25,13 +25,16 @@ Everything below assumes you're in the project folder in a terminal (`cd` to whe
    date: 2026-08-15
    tags: ["budgeting", "analytics"]
    draft: false
+   summary: "Variance reports usually flag the wrong things because they compare against the wrong baseline. This post walks through a better baseline and what changes when you use it."
    ---
 
    Your post content goes here, written in normal Markdown: paragraphs, `## headings`,
    **bold**, links, code blocks, lists — all of it works.
    ```
 
-3. Write the post below the frontmatter in Markdown.
+   `summary` is optional — 1 to 3 sentences that appear in a collapsible box at the very top of the post, open by default, so a reader (or screen reader) gets the gist before committing to the whole thing. Leave it out and no box appears.
+
+3. Write the post below the frontmatter in Markdown. Estimated reading time is calculated automatically from the word count and shown next to the date — there's nothing to fill in for it.
 4. [Preview it locally](#previewing-before-you-publish) if you want to double check it.
 5. [Publish it](#publishing-the-exact-git-commands).
 

@@ -21,3 +21,9 @@ export function getAllTags(posts: Awaited<ReturnType<typeof getPosts>>) {
   }
   return [...tags].sort();
 }
+
+// Rough estimate at 200 words/minute — good enough for a "X min read" label, not meant to be precise.
+export function getReadingTime(body: string) {
+  const words = body.trim().split(/\s+/).filter(Boolean).length;
+  return Math.max(1, Math.round(words / 200));
+}
