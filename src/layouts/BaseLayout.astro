@@ -5,6 +5,9 @@ import "@fontsource/atkinson-hyperlegible-mono/300.css";
 import "@fontsource/atkinson-hyperlegible-mono/400.css";
 import "@fontsource/atkinson-hyperlegible-mono/700.css";
 import "../styles/global.css";
+import { Image } from "astro:assets";
+import Search from "astro-pagefind/components/Search.astro";
+import footerPhoto from "../assets/footer-photo.jpg";
 
 interface Props {
 	title: string;
@@ -20,6 +23,8 @@ const siteName = "Ken Miko";
 const pageTitle = title === siteName ? title : `${title} | ${siteName}`;
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 const ogImage = image ? new URL(image, Astro.site) : undefined;
+
+const footerPhotoCredit = { name: "Polina Zimmerman", url: "https://www.pexels.com/photo/photo-of-books-on-brown-wooden-shelves-3747472/" };
 ---
 
 <!doctype html>
@@ -66,23 +71,44 @@ const ogImage = image ? new URL(image, Astro.site) : undefined;
 	<body>
 		<header class="site-header">
 			<div class="container">
-				<a class="brand" href="/"><span aria-hidden="true">🦭</span> {siteName}</a>
-				<nav>
-					<a href="/blog/">Blog</a>
-					<a href="/projects/">Projects</a>
-					<a href="/about/">About</a>
-					<button class="theme-toggle" id="theme-toggle" aria-label="Switch to dark mode" type="button">
-						<svg class="icon-sun" aria-hidden="true" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-							<circle cx="12" cy="12" r="4" />
-							<path d="M12 2v2M12 20v2M4 12H2M22 12h-2M5 5l1.4 1.4M17.6 17.6L19 19M19 5l-1.4 1.4M6.4 17.6L5 19" />
-						</svg>
-						<svg class="icon-moon" aria-hidden="true" viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
-							<path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a7 7 0 0 0 10.5 10.5z" />
+				<div class="header-left">
+					<button class="icon-button" id="menu-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="sidebar" type="button">
+						<svg aria-hidden="true" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+							<path d="M3 6h18M3 12h18M3 18h18" />
 						</svg>
 					</button>
-				</nav>
+					<a class="brand" href="/"><span aria-hidden="true">🦭</span> {siteName}</a>
+				</div>
+				<button class="icon-button" id="theme-toggle" aria-label="Switch to dark mode" type="button">
+					<svg class="icon-sun" aria-hidden="true" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+						<circle cx="12" cy="12" r="4" />
+						<path d="M12 2v2M12 20v2M4 12H2M22 12h-2M5 5l1.4 1.4M17.6 17.6L19 19M19 5l-1.4 1.4M6.4 17.6L5 19" />
+					</svg>
+					<svg class="icon-moon" aria-hidden="true" viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+						<path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a7 7 0 0 0 10.5 10.5z" />
+					</svg>
+				</button>
 			</div>
 		</header>
+
+		<div class="sidebar-backdrop" id="sidebar-backdrop" hidden></div>
+		<aside class="sidebar" id="sidebar" aria-label="Site navigation" aria-hidden="true">
+			<button class="icon-button sidebar-close" id="sidebar-close" aria-label="Close menu" type="button">
+				<svg aria-hidden="true" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+					<path d="M6 6l12 12M18 6L6 18" />
+				</svg>
+			</button>
+			<nav aria-label="Primary">
+				<a href="/">Home</a>
+				<a href="/projects/">Projects</a>
+				<a href="/blog/">Blog</a>
+				<a href="/about/">About</a>
+			</nav>
+			<div class="sidebar-search">
+				<Search className="site-search" searchboxOptions={{ placeholder: "Search the site…" }} />
+			</div>
+		</aside>
+
 		<slot name="banner" />
 		<main class="container">
 			<slot />
@@ -102,24 +128,68 @@ const ogImage = image ? new URL(image, Astro.site) : undefined;
 						</p>
 					)
 				}
+				<p>
+					Footer photo by{" "}
+					<a href={footerPhotoCredit.url} target="_blank" rel="noopener noreferrer">
+						{footerPhotoCredit.name}
+					</a>{" "}
+					via Pexels.
+				</p>
+			</div>
+			<div class="footer-banner">
+				<Image src={footerPhoto} alt="" width={1920} loading="lazy" />
 			</div>
 		</footer>
 		<script>
-			const toggle = document.getElementById("theme-toggle");
+			const themeToggle = document.getElementById("theme-toggle");
 
-			function syncLabel() {
+			function syncThemeLabel() {
 				const isDark = document.documentElement.getAttribute("data-theme") === "dark";
-				toggle?.setAttribute("aria-label", isDark ? "Switch to light mode" : "Switch to dark mode");
+				themeToggle?.setAttribute("aria-label", isDark ? "Switch to light mode" : "Switch to dark mode");
 			}
 
-			toggle?.addEventListener("click", () => {
+			themeToggle?.addEventListener("click", () => {
 				const next = document.documentElement.getAttribute("data-theme") === "dark" ? "light" : "dark";
 				document.documentElement.setAttribute("data-theme", next);
 				localStorage.setItem("theme", next);
-				syncLabel();
+				syncThemeLabel();
 			});
 
-			syncLabel();
+			syncThemeLabel();
+
+			const menuToggle = document.getElementById("menu-toggle");
+			const sidebar = document.getElementById("sidebar");
+			const backdrop = document.getElementById("sidebar-backdrop");
+			const sidebarClose = document.getElementById("sidebar-close");
+
+			function openSidebar() {
+				sidebar?.classList.add("is-open");
+				sidebar?.setAttribute("aria-hidden", "false");
+				if (backdrop) backdrop.hidden = false;
+				menuToggle?.setAttribute("aria-expanded", "true");
+				document.body.classList.add("no-scroll");
+				sidebarClose?.focus();
+			}
+
+			function closeSidebar() {
+				sidebar?.classList.remove("is-open");
+				sidebar?.setAttribute("aria-hidden", "true");
+				if (backdrop) backdrop.hidden = true;
+				menuToggle?.setAttribute("aria-expanded", "false");
+				document.body.classList.remove("no-scroll");
+				menuToggle?.focus();
+			}
+
+			menuToggle?.addEventListener("click", () => {
+				sidebar?.classList.contains("is-open") ? closeSidebar() : openSidebar();
+			});
+
+			backdrop?.addEventListener("click", closeSidebar);
+			sidebarClose?.addEventListener("click", closeSidebar);
+
+			document.addEventListener("keydown", (event) => {
+				if (event.key === "Escape" && sidebar?.classList.contains("is-open")) closeSidebar();
+			});
 		</script>
 	</body>
 </html>
