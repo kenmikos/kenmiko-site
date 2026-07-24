@@ -27,3 +27,9 @@ export function getReadingTime(body: string) {
   const words = body.trim().split(/\s+/).filter(Boolean).length;
   return Math.max(1, Math.round(words / 200));
 }
+
+// Frontmatter dates parse as UTC midnight. Forcing UTC here too means the displayed
+// date always matches what's written in frontmatter, regardless of the server's local timezone.
+export function formatDate(date: Date) {
+  return date.toLocaleDateString("en-US", { dateStyle: "long", timeZone: "UTC" });
+}

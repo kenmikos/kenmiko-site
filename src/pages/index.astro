@@ -1,6 +1,6 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import { getPosts, getProjects, getReadingTime } from "../lib/content";
+import { getPosts, getProjects, getReadingTime, formatDate } from "../lib/content";
 import { Image } from "astro:assets";
 
 const posts = (await getPosts()).slice(0, 5);
@@ -35,7 +35,7 @@ const projects = (await getProjects()).slice(0, 3);
 							<a href={`/blog/${post.id}/`}>{post.data.title}</a>
 						</h3>
 						<p class="card-meta">
-							{post.data.date.toLocaleDateString("en-US", { dateStyle: "long" })} · {getReadingTime(post.body ?? "")} min read
+							{formatDate(post.data.date)} · {getReadingTime(post.body ?? "")} min read
 						</p>
 						<p>{post.data.description}</p>
 					</li>

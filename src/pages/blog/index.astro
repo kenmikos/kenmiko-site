@@ -1,6 +1,6 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
-import { getPosts, getAllTags, getReadingTime } from "../../lib/content";
+import { getPosts, getAllTags, getReadingTime, formatDate } from "../../lib/content";
 
 const posts = await getPosts();
 const tags = getAllTags(posts);
@@ -29,7 +29,7 @@ const tags = getAllTags(posts);
 						<a href={`/blog/${post.id}/`}>{post.data.title}</a>
 					</h2>
 					<p class="card-meta">
-						{post.data.date.toLocaleDateString("en-US", { dateStyle: "long" })} · {getReadingTime(post.body ?? "")} min read
+						{formatDate(post.data.date)} · {getReadingTime(post.body ?? "")} min read
 					</p>
 					<p>{post.data.description}</p>
 				</li>

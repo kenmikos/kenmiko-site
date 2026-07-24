@@ -1,6 +1,6 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
-import { getPosts, getReadingTime } from "../../lib/content";
+import { getPosts, getReadingTime, formatDate } from "../../lib/content";
 import { render } from "astro:content";
 
 export async function getStaticPaths() {
@@ -20,7 +20,7 @@ const readingTime = getReadingTime(post.body ?? "");
 	<article>
 		<h1>{post.data.title}</h1>
 		<p class="card-meta">
-			{post.data.date.toLocaleDateString("en-US", { dateStyle: "long" })} · {readingTime} min read
+			{formatDate(post.data.date)} · {readingTime} min read
 		</p>
 
 		{
