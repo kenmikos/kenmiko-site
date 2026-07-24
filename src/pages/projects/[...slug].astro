@@ -13,13 +13,33 @@ export async function getStaticPaths() {
 }
 
 const { project } = Astro.props;
-const { Content } = await render(project);
+const { Content, headings } = await render(project);
+// Only the top two heading levels go in the jump-nav — deeper ones make it noisy.
+const tocHeadings = headings.filter((h) => h.depth <= 3);
 ---
 
 <BaseLayout title={project.data.title} description={project.data.description} type="article">
 	<article>
+		{project.data.tier && <p class="card-meta">{project.data.tier}</p>}
 		<h1>{project.data.title}</h1>
+		{
+			project.data.scope && (
+				<p class="card-meta">
+					<strong>Scope:</strong> {project.data.scope}
+				</p>
+			)
+		}
 		<Image class="card-cover" src={project.data.cover} alt={project.data.coverAlt} width={800} />
+
+		{
+			project.data.deliverables.length > 0 && (
+				<ul>
+					{project.data.deliverables.map((item) => (
+						<li>{item}</li>
+					))}
+				</ul>
+			)
+		}
 
 		{
 			project.data.tools.length > 0 && (
@@ -28,6 +48,20 @@ const { Content } = await render(project);
 						<li class="tag">{tool}</li>
 					))}
 				</ul>
+			)
+		}
+
+		{
+			tocHeadings.length > 2 && (
+				<nav class="toc" aria-label="Sections in this project">
+					<ul>
+						{tocHeadings.map((h) => (
+							<li style={`margin-left: ${(h.depth - 2) * 1}rem`}>
+								<a href={`#${h.slug}`}>{h.text}</a>
+							</li>
+						))}
+					</ul>
+				</nav>
 			)
 		}
 

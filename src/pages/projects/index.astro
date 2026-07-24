@@ -15,10 +15,23 @@ const projects = await getProjects();
 					<a href={`/projects/${project.id}/`}>
 						<Image class="card-cover" src={project.data.cover} alt={project.data.coverAlt} width={640} />
 					</a>
+					{project.data.tier && <p class="card-meta">{project.data.tier}</p>}
 					<h2 class="card-title">
 						<a href={`/projects/${project.id}/`}>{project.data.title}</a>
 					</h2>
 					<p>{project.data.description}</p>
+					{project.data.deliverables.length > 0 && (
+						<ul>
+							{project.data.deliverables.map((item) => (
+								<li>{item}</li>
+							))}
+						</ul>
+					)}
+					{project.data.scope && (
+						<p class="card-meta">
+							<strong>Scope:</strong> {project.data.scope}
+						</p>
+					)}
 					{project.data.tools.length > 0 && (
 						<ul class="tag-list" aria-label="Tools used">
 							{project.data.tools.map((tool) => (

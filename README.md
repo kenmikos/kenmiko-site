@@ -60,15 +60,30 @@ Projects are a folder (not a single file) so each one can carry its own cover im
    tools: ["SQL", "Python", "Power BI"]
    cover: "./cover.jpg"
    coverAlt: "Screenshot of the spend-rate dashboard showing a red-flagged project"
+   tier: "Intermediate Data Modeling"
+   scope: "6-table relational schema, multi-source"
+   deliverables: ["Power Query pipeline", "Power BI dashboard", "Process documentation"]
    ---
 
    Write the project up here: what the problem was, what you built, what you used, and
    what the outcome was.
    ```
 
-   `cover` must point to a file that actually exists in the same folder — that's what the "put a cover image in that folder" step above was for.
+   `cover` must point to a file that actually exists in the same folder — that's what the "put a cover image in that folder" step above was for. `tier`, `scope`, and `deliverables` are all optional — leave them out entirely if a project doesn't need them.
 
-4. Write the project write-up below the frontmatter.
+4. Write the project write-up below the frontmatter, using `##`/`###` headings for structure (e.g. Project Overview → Scenario/Sources/Process/Results → Findings & Recommendations). Once a project has more than a couple of headings, a table of contents is generated automatically and linked to them — nothing to configure.
+
+   For a section you want collapsed by default (a detailed methodology write-up, for example), wrap it in plain HTML — no setup needed, it's styled to match automatically:
+
+   ```html
+   <details>
+   <summary>Methodology</summary>
+
+   The collapsed content goes here, in Markdown, same as anywhere else.
+
+   </details>
+   ```
+
 5. [Preview it locally](#previewing-before-you-publish), then [publish it](#publishing-the-exact-git-commands).
 
 ### Where images go

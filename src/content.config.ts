@@ -28,6 +28,9 @@ const projects = defineCollection({
       tools: z.array(z.string()).default([]),
       cover: image(),
       coverAlt: z.string(),
+      tier: z.string().optional(), // optional track/category label, e.g. "Foundational ETL"
+      scope: z.string().optional(), // optional one-line scope summary, e.g. "single-day turnaround, two sources"
+      deliverables: z.array(z.string()).default([]), // optional list of concrete outputs, distinct from `tools`
     }),
 });
 
