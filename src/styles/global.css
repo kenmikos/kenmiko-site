@@ -83,6 +83,9 @@
 
 body {
 	margin: 0;
+	display: flex;
+	flex-direction: column;
+	min-height: 100vh;
 }
 
 img,
@@ -198,6 +201,22 @@ blockquote {
 	color: var(--text-muted);
 }
 
+figure {
+	margin: var(--space-4) 0;
+}
+
+figure img {
+	border-radius: var(--radius-md);
+}
+
+figcaption {
+	font-family: var(--font-accent);
+	font-weight: 300;
+	font-size: var(--text-xs);
+	color: var(--text-muted);
+	margin-top: var(--space-1);
+}
+
 /* ==========================================================================
    4. Layout
    ========================================================================== */
@@ -272,7 +291,6 @@ article,
 .site-header {
 	border-bottom: 1px solid var(--border);
 	padding: var(--space-4) 0;
-	margin-bottom: var(--space-16);
 }
 
 .site-header .container {
@@ -307,25 +325,58 @@ article,
 }
 
 .site-footer {
-	border-top: 1px solid var(--border);
+	position: relative;
+	overflow: hidden;
 	margin-top: var(--space-24);
+}
+
+.footer-banner-img {
+	position: absolute;
+	inset: 0;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	object-position: center center;
+	z-index: 0;
+}
+
+.footer-banner-scrim {
+	position: absolute;
+	inset: 0;
+	background: rgba(0, 0, 0, 0.6);
+	z-index: 1;
+}
+
+.footer-content {
+	position: relative;
+	z-index: 2;
 	padding: var(--space-6) 0 var(--space-8);
-	color: var(--text-muted);
 	font-family: var(--font-accent);
 	font-weight: 300;
-	font-size: var(--text-sm);
+	/* Deliberately tiny — this is copyright/credit chrome, not content meant to be read.
+	   10px is the floor: small enough to stay out of the way, not smaller. */
+	font-size: 10px;
+}
+
+.footer-content p {
+	margin: 0 0 var(--space-1);
+	color: rgba(255, 255, 255, 0.85);
+	text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.footer-content a {
+	color: #ffffff;
 }
 
 main {
+	margin-top: var(--space-16);
 	padding-bottom: var(--space-24);
+	flex: 1 0 auto;
 }
 
 @media (max-width: 40rem) {
-	.site-header {
-		margin-bottom: var(--space-16);
-	}
-
 	main {
+		margin-top: var(--space-8);
 		padding-bottom: var(--space-16);
 	}
 }
@@ -442,20 +493,19 @@ body.no-scroll {
 	--pagefind-ui-font: var(--font-body);
 }
 
-/* footer photo banner */
 
-.footer-banner {
-	width: 100%;
-	height: 140px;
-	overflow: hidden;
-	margin-top: var(--space-6);
+/* share button */
+
+.share-button {
+	vertical-align: middle;
+	margin-left: var(--space-2);
 }
 
-.footer-banner img {
-	width: 100%;
-	height: 100%;
-	object-fit: cover;
-	object-position: center center;
+.share-feedback {
+	font-family: var(--font-accent);
+	font-size: var(--text-xs);
+	color: var(--accent);
+	margin-left: var(--space-1);
 }
 
 /* buttons */

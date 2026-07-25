@@ -8,15 +8,20 @@ Everything below assumes you're in the project folder in a terminal (`cd` to whe
 
 ### Adding a blog post
 
-1. Copy the template instead of typing frontmatter from scratch:
+Posts are a folder (not a single file) so each one can optionally carry its own cover image alongside the write-up.
+
+1. Copy the template folder:
 
    ```bash
-   cp src/content/posts/_template.md src/content/posts/your-slug-here.md
+   cp -r src/content/posts/_template src/content/posts/your-slug-here
    ```
 
-   The filename becomes the URL — `your-slug-here.md` publishes at `/blog/your-slug-here/`. Use lowercase words separated by hyphens.
+   (On Windows PowerShell: `Copy-Item -Recurse src/content/posts/_template src/content/posts/your-slug-here`)
 
-2. Open the new file and fill in the frontmatter. Full example of what it should look like when done:
+   The folder name becomes the URL — `your-slug-here` publishes at `/blog/your-slug-here/`. Use lowercase words separated by hyphens.
+
+2. If you want a cover image, put it in that new folder — e.g. `src/content/posts/your-slug-here/cover.jpg`. Not required; skip this step if the post doesn't need one.
+3. Open `src/content/posts/your-slug-here/index.md` and fill in the frontmatter. Full example of what it should look like when done:
 
    ```md
    ---
@@ -26,6 +31,9 @@ Everything below assumes you're in the project folder in a terminal (`cd` to whe
    tags: ["budgeting", "analytics"]
    draft: false
    summary: "Variance reports usually flag the wrong things because they compare against the wrong baseline. This post walks through a better baseline and what changes when you use it."
+   cover: "./cover.jpg"
+   coverAlt: "A variance report with the misleading baseline column highlighted in red"
+   coverCaption: "Photo by Jane Doe via Pexels"
    ---
 
    Your post content goes here, written in normal Markdown: paragraphs, `## headings`,
@@ -34,9 +42,11 @@ Everything below assumes you're in the project folder in a terminal (`cd` to whe
 
    `summary` is optional — 1 to 3 sentences that appear in a collapsible box at the very top of the post, open by default, so a reader (or screen reader) gets the gist before committing to the whole thing. Leave it out and no box appears.
 
-3. Write the post below the frontmatter in Markdown. Estimated reading time is calculated automatically from the word count and shown next to the date — there's nothing to fill in for it.
-4. [Preview it locally](#previewing-before-you-publish) if you want to double check it.
-5. [Publish it](#publishing-the-exact-git-commands).
+   `cover`, `coverAlt`, and `coverCaption` are all optional too. When `cover` is set, it shows at the top of the post, becomes the image used for link previews when the post is shared (Open Graph), and shows as a thumbnail on the blog index. `coverCaption` is small text under the image for a caption or photo credit — leave it out if you don't need one.
+
+4. Write the post below the frontmatter in Markdown. Estimated reading time is calculated automatically from the word count and shown next to the date — there's nothing to fill in for it. Every post also gets an automatic "copy link" button next to the date — nothing to configure there either.
+5. [Preview it locally](#previewing-before-you-publish) if you want to double check it.
+6. [Publish it](#publishing-the-exact-git-commands).
 
 ### Adding a portfolio project
 
@@ -147,9 +157,12 @@ git push
 
 ## Site-wide settings
 
-- **Site name** ("Ken Miko," shown in the header, footer, browser tab, and RSS feed) — one place to change it: `src/layouts/BaseLayout.astro`, the `siteName` constant near the top of the frontmatter (currently line 18).
-- **Nav links** (Blog / Projects / About in the header) — `src/layouts/BaseLayout.astro`, inside the `<nav>` block. Add, remove, or reorder the `<a href="...">Label</a>` lines directly.
-- **Home page intro text** — `src/pages/index.astro`, the `<p>` inside the first `<section>`.
+- **Site name** ("Ken Miko," shown in the header, footer, browser tab, and RSS feed) — one place to change it: `src/layouts/BaseLayout.astro`, the `siteName` constant near the top of the frontmatter.
+- **Nav links** (Home / Projects / Blog / About, in the sidebar opened by the hamburger icon) — `src/layouts/BaseLayout.astro`, inside the `<aside class="sidebar">` block's `<nav>`. Add, remove, or reorder the `<a href="...">Label</a>` lines directly.
+- **Search** — powered by [Pagefind](https://pagefind.app), which indexes every page automatically on each `npm run build`. Nothing to maintain; it just works as pages are added, edited, or removed.
+- **Header photo** (home page only) — `src/pages/index.astro`, the `headerPhoto` import and the `<div class="hero-banner">` block. Swap the imported file to change the image.
+- **Footer photo** (every page) — `src/layouts/BaseLayout.astro`, the `footerPhoto` import near the top. Swap the imported file to change the image; update the credit line in the footer if you change photographers.
+- **Home page intro text** — `src/pages/index.astro`, inside `.hero-banner-content`.
 - **About page** — `src/pages/about.astro`, edit directly.
 - **Site domain** (used for canonical URLs, RSS, and the sitemap) — `astro.config.mjs`, the `site: 'https://kenmiko.com'` value.
 - **Colors, fonts, spacing** — `src/styles/global.css`, all at the top in the "Design tokens" section as `--variable: value` pairs. Change a value there rather than hunting for it elsewhere in the CSS.

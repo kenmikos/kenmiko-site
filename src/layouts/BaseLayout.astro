@@ -14,17 +14,14 @@ interface Props {
 	description: string;
 	image?: string;
 	type?: "website" | "article";
-	photoCredit?: { name: string; url: string };
 }
 
-const { title, description, image, type = "website", photoCredit } = Astro.props;
+const { title, description, image, type = "website" } = Astro.props;
 
 const siteName = "Ken Miko";
 const pageTitle = title === siteName ? title : `${title} | ${siteName}`;
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 const ogImage = image ? new URL(image, Astro.site) : undefined;
-
-const footerPhotoCredit = { name: "Polina Zimmerman", url: "https://www.pexels.com/photo/photo-of-books-on-brown-wooden-shelves-3747472/" };
 ---
 
 <!doctype html>
@@ -114,30 +111,18 @@ const footerPhotoCredit = { name: "Polina Zimmerman", url: "https://www.pexels.c
 			<slot />
 		</main>
 		<footer class="site-footer">
-			<div class="container">
+			<Image class="footer-banner-img" src={footerPhoto} alt="" width={1920} loading="lazy" />
+			<div class="footer-banner-scrim"></div>
+			<div class="container footer-content">
 				<p>&copy; {new Date().getFullYear()} {siteName}. Built with Astro.</p>
 				<p>Last updated {new Date().toLocaleDateString("en-US", { month: "long", year: "numeric", timeZone: "UTC" })}.</p>
-				{
-					photoCredit && (
-						<p>
-							Header photo by{" "}
-							<a href={photoCredit.url} target="_blank" rel="noopener noreferrer">
-								{photoCredit.name}
-							</a>{" "}
-							via Pexels.
-						</p>
-					)
-				}
 				<p>
-					Footer photo by{" "}
-					<a href={footerPhotoCredit.url} target="_blank" rel="noopener noreferrer">
-						{footerPhotoCredit.name}
+					Header and footer photos by{" "}
+					<a href="https://www.pexels.com/@polina-zimmerman/" target="_blank" rel="noopener noreferrer">
+						Polina Zimmerman
 					</a>{" "}
 					via Pexels.
 				</p>
-			</div>
-			<div class="footer-banner">
-				<Image src={footerPhoto} alt="" width={1920} loading="lazy" />
 			</div>
 		</footer>
 		<script>

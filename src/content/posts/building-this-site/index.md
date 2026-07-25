@@ -5,6 +5,9 @@ date: 2026-07-24T18:44:52Z
 tags: ["build-notes", "web", "accessibility"]
 draft: false
 summary: "The first post on the site is about the site: I chose a low-effort stack I own and can update from a text file due to my busy schedule. I designed the site with accessibility in mind by using a tested palette and Atkinson Hyperlegible font family. I wanted to make this site to host my analytics portfolio and a blog featuring posts about financial, technical, and legal systems."
+cover: "./cover.jpg"
+coverAlt: "Two leashed dogs, Nugget and Gerald, standing on a rocky lakeshore path at sunset, with Prien Lake and the I-210 bridge in the background."
+coverCaption: "Nugget (left) and Gerald (right) at Prien Lake Park, Lake Charles, LA."
 ---
 
 This is the first post on this site, and it's about the site itself. That's a little self-referential, but it's also the most honest place to start: before I write about anything else, here's the thing you're reading it on, and why it works the way it does.

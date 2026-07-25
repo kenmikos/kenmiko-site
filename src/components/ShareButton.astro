@@ -1,0 +1,49 @@
+---
+---
+
+<button class="icon-button share-button" type="button" data-share-button aria-label="Copy link to this post">
+	<svg aria-hidden="true" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+		<path d="M10 13a5 5 0 0 0 7.07 0l2.83-2.83a5 5 0 0 0-7.07-7.07L11.5 4.5" />
+		<path d="M14 11a5 5 0 0 0-7.07 0L4.1 13.83a5 5 0 0 0 7.07 7.07L12.5 19.5" />
+	</svg>
+</button>
+<span class="share-feedback" data-share-feedback aria-live="polite"></span>
+
+<script>
+	// Legacy fallback for browsers/contexts that block navigator.clipboard
+	// (older browsers, some privacy settings, non-secure contexts).
+	function legacyCopy(text: string) {
+		const textarea = document.createElement("textarea");
+		textarea.value = text;
+		textarea.style.position = "fixed";
+		textarea.style.opacity = "0";
+		document.body.appendChild(textarea);
+		textarea.select();
+		let succeeded = false;
+		try {
+			succeeded = document.execCommand("copy");
+		} catch {
+			succeeded = false;
+		}
+		textarea.remove();
+		return succeeded;
+	}
+
+	document.querySelectorAll("[data-share-button]").forEach((button) => {
+		button.addEventListener("click", async () => {
+			const feedback = button.nextElementSibling;
+			let copied = false;
+			try {
+				await navigator.clipboard.writeText(window.location.href);
+				copied = true;
+			} catch {
+				copied = legacyCopy(window.location.href);
+			}
+			if (!feedback) return;
+			feedback.textContent = copied ? "Copied!" : "Couldn't copy — copy the URL from your address bar";
+			setTimeout(() => {
+				feedback.textContent = "";
+			}, 2000);
+		});
+	});
+</script>

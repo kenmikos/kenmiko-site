@@ -11,7 +11,6 @@ const projects = (await getProjects()).slice(0, 3);
 <BaseLayout
 	title="Ken Miko"
 	description="Data analytics, accounting systems, and making financial and technical systems legible — portfolio and blog by Ken Miko."
-	photoCredit={{ name: "Polina Zimmerman", url: "https://www.pexels.com/photo/photo-of-computers-near-windows-3747481/" }}
 >
 	<div class="hero-banner" slot="banner">
 		<Image src={headerPhoto} alt="" width={1920} loading="eager" fetchpriority="high" />
@@ -37,6 +36,11 @@ const projects = (await getProjects()).slice(0, 3);
 			{
 				posts.map((post) => (
 					<li>
+						{post.data.cover && (
+							<a href={`/blog/${post.id}/`}>
+								<Image class="card-cover" src={post.data.cover} alt={post.data.coverAlt ?? ""} width={640} />
+							</a>
+						)}
 						<h3 class="card-title">
 							<a href={`/blog/${post.id}/`}>{post.data.title}</a>
 						</h3>

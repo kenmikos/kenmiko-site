@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import { getPosts, getAllTags, getReadingTime, formatDate } from "../../lib/content";
+import { Image } from "astro:assets";
 
 const posts = await getPosts();
 const tags = getAllTags(posts);
@@ -25,6 +26,11 @@ const tags = getAllTags(posts);
 		{
 			posts.map((post) => (
 				<li>
+					{post.data.cover && (
+						<a href={`/blog/${post.id}/`}>
+							<Image class="card-cover" src={post.data.cover} alt={post.data.coverAlt ?? ""} width={640} />
+						</a>
+					)}
 					<h2 class="card-title">
 						<a href={`/blog/${post.id}/`}>{post.data.title}</a>
 					</h2>

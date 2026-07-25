@@ -7,14 +7,18 @@ const templateIgnore = ["!**/_*.{md,mdx}", "!**/_*/**"];
 
 const posts = defineCollection({
   loader: glob({ pattern: ["**/*.{md,mdx}", ...templateIgnore], base: "./src/content/posts" }),
-  schema: z.object({
-    title: z.string(),
-    description: z.string(),
-    date: z.coerce.date(),
-    tags: z.array(z.string()).default([]),
-    draft: z.boolean().default(false),
-    summary: z.string().optional(), // optional 1-3 sentence summary shown in a collapsible box at the top of the post
-  }),
+  schema: ({ image }) =>
+    z.object({
+      title: z.string(),
+      description: z.string(),
+      date: z.coerce.date(),
+      tags: z.array(z.string()).default([]),
+      draft: z.boolean().default(false),
+      summary: z.string().optional(), // optional 1-3 sentence summary shown in a collapsible box at the top of the post
+      cover: image().optional(), // optional cover image — also used as the social/link-preview image when set
+      coverAlt: z.string().optional(),
+      coverCaption: z.string().optional(), // optional small-text caption/credit shown under the cover image
+    }),
 });
 
 const projects = defineCollection({
