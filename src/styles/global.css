@@ -56,6 +56,11 @@
 
 	--measure: 68ch;
 	--container-width: 1200px;
+
+	/* Fluid edge margin for full-width bars (header, footer) — scales with viewport
+	   instead of centering in a fixed-width column, so it stays close to the edge
+	   on wide screens rather than floating in from a big empty gutter. */
+	--edge-padding: clamp(var(--space-4), 4vw, var(--space-12));
 }
 
 [data-theme="dark"] {
@@ -299,6 +304,10 @@ article,
 	align-items: center;
 	flex-wrap: wrap;
 	gap: var(--space-2);
+	max-width: none;
+	margin: 0;
+	padding-left: var(--edge-padding);
+	padding-right: var(--edge-padding);
 }
 
 .header-left {
@@ -350,7 +359,12 @@ article,
 .footer-content {
 	position: relative;
 	z-index: 2;
-	padding: var(--space-6) 0 var(--space-8);
+	max-width: none;
+	margin: 0;
+	padding-top: var(--space-6);
+	padding-bottom: var(--space-8);
+	padding-left: var(--edge-padding);
+	padding-right: var(--edge-padding);
 	font-family: var(--font-accent);
 	font-weight: 300;
 	/* Deliberately tiny — this is copyright/credit chrome, not content meant to be read.
