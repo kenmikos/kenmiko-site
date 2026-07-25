@@ -24,24 +24,26 @@ const { posts } = Astro.props;
 			posts.map((post) => (
 				<li>
 					{post.data.cover && (
-						<a href={`/blog/${post.id}/`}>
+						<a class="card-thumb" href={`/blog/${post.id}/`}>
 							<Image
 								class="card-cover"
 								src={post.data.cover}
 								alt={post.data.coverAlt ?? ""}
-								width={640}
-								height={getCoverHeight(post.data.cover, 640)}
+								width={300}
+								height={getCoverHeight(post.data.cover, 300)}
 								fit="cover"
 							/>
 						</a>
 					)}
-					<h2 class="card-title">
-						<a href={`/blog/${post.id}/`}>{post.data.title}</a>
-					</h2>
-					<p class="card-meta">
-						{formatDate(post.data.date)} · {getReadingTime(post.body ?? "")} min read
-					</p>
-					<p>{post.data.description}</p>
+					<div class="card-body">
+						<h2 class="card-title">
+							<a href={`/blog/${post.id}/`}>{post.data.title}</a>
+						</h2>
+						<p class="card-meta">
+							{formatDate(post.data.date)} · {getReadingTime(post.body ?? "")} min read
+						</p>
+						<p>{post.data.description}</p>
+					</div>
 				</li>
 			))
 		}

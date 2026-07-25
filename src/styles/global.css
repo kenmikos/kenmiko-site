@@ -652,6 +652,9 @@ summary {
 }
 
 .card-list > li {
+	display: flex;
+	gap: var(--space-4);
+	align-items: flex-start;
 	background: var(--bg-elevated);
 	border: 1px solid var(--border);
 	border-radius: var(--radius-md);
@@ -661,6 +664,16 @@ summary {
 
 .card-list > li:hover {
 	border-color: var(--accent);
+}
+
+.card-thumb {
+	flex-shrink: 0;
+	width: 140px;
+}
+
+.card-body {
+	flex: 1;
+	min-width: 0;
 }
 
 .card-title {
@@ -676,7 +689,18 @@ summary {
 
 .card-cover {
 	border-radius: var(--radius-md);
-	margin-bottom: var(--space-2);
+	width: 100%;
+	height: auto;
+}
+
+@media (max-width: 30rem) {
+	.card-list > li {
+		flex-direction: column;
+	}
+
+	.card-thumb {
+		width: 100%;
+	}
 }
 
 .section-heading {

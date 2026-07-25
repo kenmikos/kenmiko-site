@@ -37,24 +37,26 @@ const projects = (await getProjects()).slice(0, 3);
 				posts.map((post) => (
 					<li>
 						{post.data.cover && (
-							<a href={`/blog/${post.id}/`}>
+							<a class="card-thumb" href={`/blog/${post.id}/`}>
 								<Image
 									class="card-cover"
 									src={post.data.cover}
 									alt={post.data.coverAlt ?? ""}
-									width={640}
-									height={getCoverHeight(post.data.cover, 640)}
+									width={300}
+									height={getCoverHeight(post.data.cover, 300)}
 									fit="cover"
 								/>
 							</a>
 						)}
-						<h3 class="card-title">
-							<a href={`/blog/${post.id}/`}>{post.data.title}</a>
-						</h3>
-						<p class="card-meta">
-							{formatDate(post.data.date)} · {getReadingTime(post.body ?? "")} min read
-						</p>
-						<p>{post.data.description}</p>
+						<div class="card-body">
+							<h3 class="card-title">
+								<a href={`/blog/${post.id}/`}>{post.data.title}</a>
+							</h3>
+							<p class="card-meta">
+								{formatDate(post.data.date)} · {getReadingTime(post.body ?? "")} min read
+							</p>
+							<p>{post.data.description}</p>
+						</div>
 					</li>
 				))
 			}
@@ -70,20 +72,22 @@ const projects = (await getProjects()).slice(0, 3);
 			{
 				projects.map((project) => (
 					<li>
-						<a href={`/projects/${project.id}/`}>
+						<a class="card-thumb" href={`/projects/${project.id}/`}>
 							<Image
 								class="card-cover"
 								src={project.data.cover}
 								alt={project.data.coverAlt}
-								width={640}
-								height={getCoverHeight(project.data.cover, 640)}
+								width={300}
+								height={getCoverHeight(project.data.cover, 300)}
 								fit="cover"
 							/>
 						</a>
-						<h3 class="card-title">
-							<a href={`/projects/${project.id}/`}>{project.data.title}</a>
-						</h3>
-						<p>{project.data.description}</p>
+						<div class="card-body">
+							<h3 class="card-title">
+								<a href={`/projects/${project.id}/`}>{project.data.title}</a>
+							</h3>
+							<p>{project.data.description}</p>
+						</div>
 					</li>
 				))
 			}
