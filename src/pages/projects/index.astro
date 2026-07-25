@@ -1,6 +1,6 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
-import { getProjects } from "../../lib/content";
+import { getProjects, getCoverHeight } from "../../lib/content";
 import { Image } from "astro:assets";
 
 const projects = await getProjects();
@@ -13,7 +13,14 @@ const projects = await getProjects();
 			projects.map((project) => (
 				<li>
 					<a href={`/projects/${project.id}/`}>
-						<Image class="card-cover" src={project.data.cover} alt={project.data.coverAlt} width={640} />
+						<Image
+							class="card-cover"
+							src={project.data.cover}
+							alt={project.data.coverAlt}
+							width={640}
+							height={getCoverHeight(project.data.cover, 640)}
+							fit="cover"
+						/>
 					</a>
 					{project.data.tier && <p class="card-meta">{project.data.tier}</p>}
 					<h2 class="card-title">

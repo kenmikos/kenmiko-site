@@ -1,6 +1,6 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import { getPosts, getProjects, getReadingTime, formatDate } from "../lib/content";
+import { getPosts, getProjects, getReadingTime, formatDate, getCoverHeight } from "../lib/content";
 import { Image } from "astro:assets";
 import headerPhoto from "../assets/header-photo.jpg";
 
@@ -38,7 +38,14 @@ const projects = (await getProjects()).slice(0, 3);
 					<li>
 						{post.data.cover && (
 							<a href={`/blog/${post.id}/`}>
-								<Image class="card-cover" src={post.data.cover} alt={post.data.coverAlt ?? ""} width={640} />
+								<Image
+									class="card-cover"
+									src={post.data.cover}
+									alt={post.data.coverAlt ?? ""}
+									width={640}
+									height={getCoverHeight(post.data.cover, 640)}
+									fit="cover"
+								/>
 							</a>
 						)}
 						<h3 class="card-title">
@@ -69,6 +76,8 @@ const projects = (await getProjects()).slice(0, 3);
 								src={project.data.cover}
 								alt={project.data.coverAlt}
 								width={640}
+								height={getCoverHeight(project.data.cover, 640)}
+								fit="cover"
 							/>
 						</a>
 						<h3 class="card-title">

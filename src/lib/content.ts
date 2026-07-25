@@ -33,3 +33,11 @@ export function getReadingTime(body: string) {
 export function formatDate(date: Date) {
   return date.toLocaleDateString("en-US", { dateStyle: "long", timeZone: "UTC" });
 }
+
+// Cover images auto-crop to the 4:3 family instead of whatever ratio the source photo happens
+// to be: landscape sources crop to 4:3, portrait sources crop to 3:4. Given a target display
+// width, returns the matching height so the crop comes out consistent everywhere it's used.
+export function getCoverHeight(cover: { width: number; height: number }, targetWidth: number) {
+  const ratio = cover.width >= cover.height ? 4 / 3 : 3 / 4;
+  return Math.round(targetWidth / ratio);
+}

@@ -1,8 +1,8 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
-import { getProjects } from "../../lib/content";
+import { getProjects, getCoverHeight } from "../../lib/content";
 import { render } from "astro:content";
-import { Image } from "astro:assets";
+import { Image, getImage } from "astro:assets";
 
 export async function getStaticPaths() {
 	const projects = await getProjects();
@@ -16,9 +16,16 @@ const { project } = Astro.props;
 const { Content, headings } = await render(project);
 // Only the top two heading levels go in the jump-nav — deeper ones make it noisy.
 const tocHeadings = headings.filter((h) => h.depth <= 3);
+const coverHeight800 = getCoverHeight(project.data.cover, 800);
+const ogImage = await getImage({
+	src: project.data.cover,
+	width: 1200,
+	height: getCoverHeight(project.data.cover, 1200),
+	fit: "cover",
+});
 ---
 
-<BaseLayout title={project.data.title} description={project.data.description} type="article">
+<BaseLayout title={project.data.title} description={project.data.description} type="article" image={ogImage.src}>
 	<article>
 		{project.data.tier && <p class="card-meta">{project.data.tier}</p>}
 		<h1>{project.data.title}</h1>
@@ -29,7 +36,7 @@ const tocHeadings = headings.filter((h) => h.depth <= 3);
 				</p>
 			)
 		}
-		<Image class="card-cover" src={project.data.cover} alt={project.data.coverAlt} width={800} />
+		<Image class="card-cover" src={project.data.cover} alt={project.data.coverAlt} width={800} height={coverHeight800} fit="cover" />
 
 		{
 			project.data.deliverables.length > 0 && (

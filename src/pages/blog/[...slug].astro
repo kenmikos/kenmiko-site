@@ -1,6 +1,6 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
-import { getPosts, getReadingTime, formatDate } from "../../lib/content";
+import { getPosts, getReadingTime, formatDate, getCoverHeight } from "../../lib/content";
 import { render } from "astro:content";
 import { Image, getImage } from "astro:assets";
 import ShareButton from "../../components/ShareButton.astro";
@@ -16,7 +16,10 @@ export async function getStaticPaths() {
 const { post } = Astro.props;
 const { Content } = await render(post);
 const readingTime = getReadingTime(post.body ?? "");
-const ogImage = post.data.cover ? await getImage({ src: post.data.cover, width: 1200 }) : undefined;
+const coverHeight = post.data.cover ? getCoverHeight(post.data.cover, 1200) : undefined;
+const ogImage = post.data.cover
+	? await getImage({ src: post.data.cover, width: 1200, height: coverHeight, fit: "cover" })
+	: undefined;
 ---
 
 <BaseLayout title={post.data.title} description={post.data.description} type="article" image={ogImage?.src}>
@@ -29,7 +32,7 @@ const ogImage = post.data.cover ? await getImage({ src: post.data.cover, width: 
 		{
 			post.data.cover && (
 				<figure>
-					<Image src={post.data.cover} alt={post.data.coverAlt ?? ""} width={1200} />
+					<Image src={post.data.cover} alt={post.data.coverAlt ?? ""} width={1200} height={coverHeight} fit="cover" />
 					{post.data.coverCaption && <figcaption>{post.data.coverCaption}</figcaption>}
 				</figure>
 			)
