@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import HeroBanner from "../../components/HeroBanner.astro";
 import { getPosts, getAllTags, getReadingTime, formatDate, getCoverHeight } from "../../lib/content";
 import { Image } from "astro:assets";
 
@@ -8,7 +9,11 @@ const tags = getAllTags(posts);
 ---
 
 <BaseLayout title="Blog" description="Writing on analytics, budgeting, financial systems, and going back to school as a working adult.">
-	<h1>Blog</h1>
+	<HeroBanner
+		slot="banner"
+		title="Writing it down :)"
+		subtitle="Because the only difference between screwing around and science is writing it down. These are the results of random late-night research, calculations, and rabbit holes turned into something someone can maybe use."
+	/>
 
 	{
 		tags.length > 0 && (

@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import HeroBanner from "../../components/HeroBanner.astro";
 import { getProjects, getCoverHeight } from "../../lib/content";
 import { Image } from "astro:assets";
 
@@ -7,7 +8,11 @@ const projects = await getProjects();
 ---
 
 <BaseLayout title="Projects" description="Data analytics portfolio projects by Ken Miko.">
-	<h1>Projects</h1>
+	<HeroBanner
+		slot="banner"
+		title="I love messy data :) "
+		subtitle="I'm a BI/data analyst by trade who turns raw data into clean dashboards, clear visualizations, and documentation people actually use. Below are end-to-end projects covering the full lifecycle: sourcing, cleaning, modeling, visualizing, and documenting."
+	/>
 	<ul class="card-list">
 		{
 			projects.map((project) => (

@@ -1,8 +1,8 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import HeroBanner from "../components/HeroBanner.astro";
 import { getPosts, getProjects, getReadingTime, formatDate, getCoverHeight } from "../lib/content";
 import { Image } from "astro:assets";
-import headerPhoto from "../assets/header-photo.jpg";
 
 const posts = (await getPosts()).slice(0, 5);
 const projects = (await getProjects()).slice(0, 3);
@@ -12,20 +12,11 @@ const projects = (await getProjects()).slice(0, 3);
 	title="Ken Miko"
 	description="Data analytics, accounting systems, and making financial and technical systems legible — portfolio and blog by Ken Miko."
 >
-	<div class="hero-banner" slot="banner">
-		<Image src={headerPhoto} alt="" width={1920} loading="eager" fetchpriority="high" />
-		<div class="hero-banner-scrim"></div>
-		<div class="hero-banner-content">
-			<h1>Ken Miko</h1>
-			<p>
-				I'm finishing a BS in Accounting Information Systems with a data analytics concentration,
-				and working as a project controls data analyst. This site collects portfolio projects and
-				writing about making financial and technical systems legible to the people they're supposed
-				to serve — analytics, budgeting, Louisiana-specific legal and financial quirks, business
-				teardowns, and going back to school as a working adult.
-			</p>
-		</div>
-	</div>
+	<HeroBanner
+		slot="banner"
+		title="Hi! I'm Ken :)"
+		subtitle="I write about and build things that make financial, technical, and legal systems easier to understand. Analytics, budgets, business breakdowns, whatever I’m interested in. Poke around the projects or the blog."
+	/>
 
 	<section>
 		<div class="section-heading">

@@ -1,0 +1,20 @@
+---
+import { Image } from "astro:assets";
+import headerPhoto from "../assets/header-photo.jpg";
+
+interface Props {
+	title: string;
+	subtitle: string;
+}
+
+const { title, subtitle } = Astro.props;
+---
+
+<div class="hero-banner">
+	<Image src={headerPhoto} alt="" width={1920} loading="eager" fetchpriority="high" />
+	<div class="hero-banner-scrim"></div>
+	<div class="hero-banner-content">
+		<h1>{title}</h1>
+		<p>{subtitle}</p>
+	</div>
+</div>
