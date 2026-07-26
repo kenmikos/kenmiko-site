@@ -4,7 +4,15 @@ Personal portfolio + blog. Astro, deployed to Cloudflare via Workers static asse
 
 ## How I update this site
 
-Everything below assumes you're in the project folder in a terminal (`cd` to wherever you cloned `kenmiko-site`) and have run `npm install` at least once.
+Everything below assumes you're in the project folder in a terminal. If "open a terminal in the project folder" isn't obvious, here's exactly how:
+
+### Opening a terminal in the project folder
+
+1. Open **File Explorer** and go to the `kenmiko-site` folder (`C:\Users\Ken\Projects\kenmiko-site`).
+2. Right-click on empty space inside that folder (not on a file) and choose **"Open in Terminal"**. This is built into Windows 11 — no extra program to install.
+3. A terminal window (PowerShell) opens, already sitting in the right folder. Every command below — copying templates, running `npm run dev`, the `git` publish commands — gets typed into this window.
+
+You'll need to have run `npm install` once, the very first time, before anything else works — type it in that same terminal window and let it finish.
 
 ### Adding a blog post
 
@@ -145,7 +153,7 @@ npx astro dev stop
 
 ### Publishing (the exact git commands)
 
-Once a post or project looks right and `draft: false` is set:
+Once a post or project looks right and `draft: false` is set, [open a terminal in the project folder](#opening-a-terminal-in-the-project-folder) and run:
 
 ```bash
 git add .
